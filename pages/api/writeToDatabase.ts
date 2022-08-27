@@ -15,10 +15,8 @@ export const writeToDatabase = async ({ email, name }: User) => {
             name
         }
     })
-    console.log(USER)
+    return USER
 }
-
-writeToDatabase({ email: 'bryan.hain@sendinblue.com', name: 'Bryan Hain' })
 
 export default function handler(req: NextApiRequest, res: NextApiResponse) {
     res.json('written to database')

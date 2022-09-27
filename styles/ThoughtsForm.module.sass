@@ -1,0 +1,46 @@
+@import 'colors'
+
+.thoughtsForm
+    display: block
+    flex-direction: column
+    padding: 16px
+    min-width: 380px
+    background-color: $thoughtsFormBg
+    color: $thoughtsFormColor
+    margin-right: 100%
+    border: 4px solid $thoughtsFormBorderColor
+    h5
+        margin-bottom: 20px
+    &_field
+        display: flex
+        justify-content: space-between
+        align-items: flex-start
+        margin-bottom: 20px
+        label
+            width: 150px
+            font-size: 12px
+        input
+            width: 200px
+    &_importanceLevel
+        display: flex
+        width: 100%
+        column-gap: 20px
+        &_Not,
+        &_Low,
+        &_Medium,
+        &_High,
+        &_Critical
+            cursor: pointer
+        &_Not
+            color: $noteIconImportance_Not
+        &_Low
+            color: $noteIconImportance_Low
+        &_Medium
+            color: $noteIconImportance_Medium
+        &_High
+            color: $noteIconImportance_High
+        &_Critical
+            color: $noteIconImportance_Critical
+    &_save
+        margin-top: 20px
+        padding: 6px 12px

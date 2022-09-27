@@ -1,7 +1,6 @@
-import { LinkProps } from "next/link"
-import Link from "next/link"
+import Link, { LinkProps } from 'next/link'
 import styles from '../styles/Navbar.module.sass'
-import { ReactElement } from "react"
+import { ReactElement } from 'react'
 
 interface NavbarLinkProps extends LinkProps {
     title?: string;

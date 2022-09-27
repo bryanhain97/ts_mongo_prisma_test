@@ -9,7 +9,7 @@ enum Importance {
 export default interface NoteProps {
     title?: string,
     text?: string,
-    created_at?: Date,
+    createdAt?: Date,
     importance?: Importance
 }
 export { Importance }

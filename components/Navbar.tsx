@@ -6,8 +6,8 @@ const Navbar = (): ReactElement => {
     return (
         <nav className={styles.navbar}>
             <NavbarElement href="/" title="Home" />
-            <NavbarElement href="/hello" title="hello" />
-            <NavbarElement href="#" />
+            <NavbarElement href="/thoughts" title="thoughts" />
+            <NavbarElement href="/about" title="about" />
         </nav>
     )
 }

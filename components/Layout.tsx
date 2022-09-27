@@ -1,5 +1,5 @@
-import Navbar from "./Navbar";
-import { ReactNode } from "react";
+import Navbar from './Navbar';
+import { ReactNode } from 'react';
 import styles from '../styles/Layout.module.sass'
 
 

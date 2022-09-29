@@ -1,10 +1,14 @@
 import styles from '../styles/ThoughtsForm.module.sass';
 import { Importance } from '../types/Note';
-import { useState } from 'react'
+import { SyntheticEvent, useState } from 'react'
 import { FaOctopusDeploy } from 'react-icons/fa'
 
 const ThoughtsForm = () => {
     const [importance, setImportance] = useState<Importance>(Importance.Low)
+
+    const getImportance = (e: SyntheticEvent) => {
+        console.log(e)
+    }
     return (
         <form className={styles.thoughtsForm}>
             <h5>create thought</h5>
@@ -17,7 +21,7 @@ const ThoughtsForm = () => {
                 <input type="text" id="text"></input>
             </div>
             <div className={styles.thoughtsForm_importanceLevel}>
-                <FaOctopusDeploy className={styles.thoughtsForm_importanceLevel_Not} />
+                <FaOctopusDeploy className={styles.thoughtsForm_importanceLevel_Not} onClick={getImportance} />
                 <FaOctopusDeploy className={styles.thoughtsForm_importanceLevel_Low} />
                 <FaOctopusDeploy className={styles.thoughtsForm_importanceLevel_Medium} />
                 <FaOctopusDeploy className={styles.thoughtsForm_importanceLevel_High} />

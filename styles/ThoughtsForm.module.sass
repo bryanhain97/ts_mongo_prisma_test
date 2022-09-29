@@ -1,29 +1,42 @@
 @import 'colors'
+@import 'mixins'
 
 .thoughtsForm
-    display: block
+    display: flex
     flex-direction: column
     padding: 16px
-    min-width: 380px
+    min-width: 350px
     background-color: $thoughtsFormBg
     color: $thoughtsFormColor
-    margin-right: 100%
     border: 4px solid $thoughtsFormBorderColor
     h5
         margin-bottom: 20px
+        letter-spacing: 2px
     &_field
         display: flex
-        justify-content: space-between
-        align-items: flex-start
-        margin-bottom: 20px
+        align-items: center
+        &:first-of-type
+            margin-bottom: 10px
         label
-            width: 150px
             font-size: 12px
-        input
-            width: 200px
+            width: 100px
+            &[for="textarea"]
+                align-self: flex-start
+        input, textarea
+            @include noFocusOutline
+            min-width: 250px
+            width: 280px
+        textarea
+            text-align: left
+            &[id="textarea"]
+                height: 80px
     &_importanceLevel
         display: flex
         width: 100%
+        height: 100%
+        align-items: center
+        padding: 10px 0px
+        justify-content: flex-end
         column-gap: 20px
         &_Not,
         &_Low,
@@ -42,5 +55,9 @@
         &_Critical
             color: $noteIconImportance_Critical
     &_save
-        margin-top: 20px
+        height: min-content
         padding: 6px 12px
+        width: 110px
+        margin-left: auto
+        margin-top: auto
+        cursor: pointer

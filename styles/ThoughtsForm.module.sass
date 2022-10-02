@@ -10,6 +10,7 @@
     color: $thoughtsFormColor
     border: 4px solid $thoughtsFormBorderColor
     h5
+        color: $createThoughtColor
         margin-bottom: 20px
         letter-spacing: 2px
     &_field
@@ -21,39 +22,22 @@
             font-size: 12px
             width: 100px
             &[for="textarea"]
-                align-self: flex-start
+                color: $noteTextColor
+            &[for="title"]
+                color: $noteTitleColor
+        input[id="title"]
+            color: $noteTitleColor
+            padding: 3px
+            font-size: 12.8px
+        textarea
+            color: $noteTextColor
+            padding: 3px
+            font-size: 10px
+            height: 120px
         input, textarea
             @include noFocusOutline
             min-width: 250px
             width: 280px
-        textarea
-            text-align: left
-            &[id="textarea"]
-                height: 80px
-    &_importanceLevel
-        display: flex
-        width: 100%
-        height: 100%
-        align-items: center
-        padding: 10px 0px
-        justify-content: flex-end
-        column-gap: 20px
-        &_Not,
-        &_Low,
-        &_Medium,
-        &_High,
-        &_Critical
-            cursor: pointer
-        &_Not
-            color: $noteIconImportance_Not
-        &_Low
-            color: $noteIconImportance_Low
-        &_Medium
-            color: $noteIconImportance_Medium
-        &_High
-            color: $noteIconImportance_High
-        &_Critical
-            color: $noteIconImportance_Critical
     &_save
         height: min-content
         padding: 6px 12px
@@ -61,3 +45,34 @@
         margin-left: auto
         margin-top: auto
         cursor: pointer
+.importanceLevel
+    display: flex
+    position: relative
+    width: 100%
+    height: 100%
+    align-items: center
+    padding: 20px 10px
+    justify-content: flex-end
+    column-gap: 20px
+    &_Not,
+    &_Low,
+    &_Medium,
+    &_High,
+    &_Critical
+        cursor: pointer
+        position: relative
+        .selected
+            display: none
+    &_Not
+        color: $noteIconImportance_Not
+    &_Low
+        color: $noteIconImportance_Low
+    &_Medium
+        color: $noteIconImportance_Medium
+    &_High
+        color: $noteIconImportance_High
+    &_Critical
+        color: $noteIconImportance_Critical
+    &_selected
+        transition: all 0.25s ease
+        transform: scale(1.5)

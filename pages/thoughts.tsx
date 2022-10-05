@@ -9,10 +9,11 @@ const ThoughtsPage: NextPage<ThoughtsPageProps> = ({ notes }) => {
     return (
         <div className={styles.thoughtsPage}>
             <ThoughtsForm />
-            {notes.map(({ text, title, importance, createdAt }:
-                NoteProps, idx: number) => (
+            {notes.map(({ id, text, title, importance, createdAt }:
+                NoteProps, idx) => (
                 <Note
                     key={idx}
+                    id={id}
                     text={text}
                     title={title}
                     importance={importance}
@@ -28,6 +29,7 @@ export default ThoughtsPage
 export async function getServerSideProps() {
     let notes = await prisma.note.findMany()
     notes = JSON.parse(JSON.stringify(notes))
+    console.log(notes)
     return {
         props: {
             notes

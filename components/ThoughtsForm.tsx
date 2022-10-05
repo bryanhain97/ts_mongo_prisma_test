@@ -30,10 +30,11 @@ const ThoughtsForm = () => {
     const saveNoteInDb = async (e: any, note: Note) => {
         e.preventDefault()
         try {
+            const createdAt = new Date().toUTCString().replace(' GMT', '')
             const addedNote = await fetch('/api/saveNote', {
                 method: 'POST',
                 mode: 'cors',
-                body: JSON.stringify({ ...note, createdAt: new Date().toDateString() }),
+                body: JSON.stringify({ ...note, createdAt }),
                 headers: {
                     'Content-Type': 'application/json'
                 }

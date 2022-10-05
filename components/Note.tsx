@@ -2,9 +2,10 @@ import NoteProps, { Importance } from '../types/Note';
 import { ReactElement, useCallback } from 'react';
 import styles from '../styles/Note.module.sass'
 import { FaOctopusDeploy } from 'react-icons/fa'
-import { motion } from 'framer-motion'
+import { filterProps, motion } from 'framer-motion'
 
 const Note = ({
+    id,
     title = 'No title',
     text = 'No text',
     createdAt,
@@ -25,10 +26,14 @@ const Note = ({
                 return styles.note_icon_NOT;
         }
     }, [])
+    const getTimeFromUTCTime = (createdAt: string): string | undefined => createdAt?.replace(' GMT', '').substring(17,)
+    const getDateFromUTCTime = (createdAt: string): string | undefined => createdAt?.replace(' GMT', '').substring(0, 16)
+
 
     return (
         <motion.div
             className={styles.note}
+            id={id}
         >
             <div className={styles.note_header}>
                 <h2 className={styles.note_title}>{title}</h2>
@@ -38,7 +43,10 @@ const Note = ({
             </div>
             <div className={styles.note_divider}></div>
             <p className={styles.note_text}>{text}</p>
-            <span className={styles.note_date}>{createdAt}</span>
+            <div className={styles.note_createdAt}>
+                <span className={styles.note_createdAt_date}>{getDateFromUTCTime(createdAt!)}</span>
+                <span className={styles.note_createdAt_time}>{getTimeFromUTCTime(createdAt!)}</span>
+            </div>
         </motion.div>
     )
 }

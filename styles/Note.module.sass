@@ -37,8 +37,15 @@
         line-height: 1rem
         color: $noteTextColor
         font-size: 0.65rem
-    &_date
+    &_createdAt
         position: absolute
+        padding: 3px
+        display: flex
         bottom: 0
-        right: 0
+        left: 0
         font-size: 0.8rem
+        &_date,
+        &_time
+            font-size: 7px
+        &_time
+            margin-left: 50px

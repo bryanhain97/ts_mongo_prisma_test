@@ -1,11 +1,13 @@
 import styles from '../styles/ThoughtsForm.module.sass';
 import Note, { Importance } from '../types/Note';
+import { useRouter } from 'next/router';
 import { ChangeEvent, useState, useCallback } from 'react'
 import { FaOctopusDeploy } from 'react-icons/fa'
 
 const DEFAULT_NOTE: Note = { title: '', text: '', importance: Importance.Not }
 
 const ThoughtsForm = () => {
+    const router = useRouter()
     const [newNote, setNewNote] = useState<Note>(DEFAULT_NOTE)
     const updateNote = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setNewNote((prevNote) => ({ ...prevNote, [e.target.name]: e.target.value }))
@@ -30,7 +32,7 @@ const ThoughtsForm = () => {
     const saveNoteInDb = async (e: any, note: Note) => {
         e.preventDefault()
         try {
-            const createdAt = new Date().toUTCString().replace(' GMT', '')
+            const createdAt = new Date();
             const addedNote = await fetch('/api/saveNote', {
                 method: 'POST',
                 mode: 'cors',
@@ -38,7 +40,8 @@ const ThoughtsForm = () => {
                 headers: {
                     'Content-Type': 'application/json'
                 }
-            })
+            });
+            router.reload()
         } catch (e) {
             console.log('ERROR: ', e)
         }
@@ -53,7 +56,13 @@ const ThoughtsForm = () => {
             </div>
             <div className={styles.thoughtsForm_field}>
                 <label htmlFor="textarea">text</label>
-                <textarea className="textarea" id="textarea" name="text" onChange={updateNote} value={newNote.text}></textarea>
+                <textarea
+                    className="textarea" id="textarea"
+                    name="text"
+                    onChange={updateNote}
+                    value={newNote.text}
+                    maxLength={220}>
+                </textarea>
             </div>
             <div className={styles.importanceLevel}>
                 <FaOctopusDeploy className={getImportanceClass(Importance.Not)} onClick={() => updateImportance(Importance.Not)} />

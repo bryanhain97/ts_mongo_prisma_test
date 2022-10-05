@@ -27,9 +27,8 @@ export default ThoughtsPage
 
 
 export async function getServerSideProps() {
-    let notes = await prisma.note.findMany()
-    notes = JSON.parse(JSON.stringify(notes))
-    console.log(notes)
+    const notes = await prisma.note.findMany()
+    // notes = JSON.parse(JSON.stringify(notes))
     return {
         props: {
             notes

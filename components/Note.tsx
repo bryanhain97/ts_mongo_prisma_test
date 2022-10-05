@@ -2,7 +2,7 @@ import NoteProps, { Importance } from '../types/Note';
 import { ReactElement, useCallback } from 'react';
 import styles from '../styles/Note.module.sass'
 import { FaOctopusDeploy } from 'react-icons/fa'
-import { filterProps, motion } from 'framer-motion'
+import { motion } from 'framer-motion'
 
 const Note = ({
     id,
@@ -26,8 +26,15 @@ const Note = ({
                 return styles.note_icon_NOT;
         }
     }, [])
-    const getTimeFromUTCTime = (createdAt: string): string | undefined => createdAt?.replace(' GMT', '').substring(17,)
-    const getDateFromUTCTime = (createdAt: string): string | undefined => createdAt?.replace(' GMT', '').substring(0, 16)
+    const getTimeFromUTCTime = useCallback((createdAt: string): string => {
+        const time = new Date(createdAt).toLocaleTimeString()
+        return time
+    }, [])
+
+    const getDateFromUTCTime = useCallback((createdAt: string): string => {
+        const date = new Date(createdAt).toUTCString().substring(0, 16)
+        return date
+    }, [])
 
 
     return (

@@ -6,6 +6,7 @@
     height: 275px
     padding: 0.5rem
     background-color: $noteBgColor
+    overflow: hidden
     &_header
         display: flex
         height: 35px
@@ -36,16 +37,20 @@
         margin-top: 1rem
         line-height: 1rem
         color: $noteTextColor
+        word-wrap: break-word
         font-size: 0.65rem
     &_createdAt
         position: absolute
-        padding: 3px
+        padding: 0.5rem
         display: flex
+        width: 100%
         bottom: 0
+        justify-content: space-between
         left: 0
+        white-space: nowrap
         font-size: 0.8rem
         &_date,
         &_time
             font-size: 7px
-        &_time
-            margin-left: 50px
+            text-decoration: underline
+            color: $noteDateColor

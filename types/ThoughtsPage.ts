@@ -1,4 +1,6 @@
-type HelloPageProps = {
-    user?: string;
+import NoteProps from '../types/Note'
+
+type ThoughtsPageProps = {
+    notes: NoteProps[]
 }
-export default HelloPageProps
+export default ThoughtsPageProps

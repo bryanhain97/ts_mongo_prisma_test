@@ -1,15 +1,12 @@
 import styles from '../styles/ThoughtsForm.module.sass';
 import Note, { Importance } from '../types/Note';
-import { ChangeEvent, useEffect, useState, useCallback } from 'react'
+import { ChangeEvent, useState, useCallback } from 'react'
 import { FaOctopusDeploy } from 'react-icons/fa'
 
-const ThoughtsForm = () => {
-    const [newNote, setNewNote] = useState<Note>({
-        title: '',
-        text: '',
-        importance: Importance.Not
-    })
+const DEFAULT_NOTE: Note = { title: '', text: '', importance: Importance.Not }
 
+const ThoughtsForm = () => {
+    const [newNote, setNewNote] = useState<Note>(DEFAULT_NOTE)
     const updateNote = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setNewNote((prevNote) => ({ ...prevNote, [e.target.name]: e.target.value }))
     }, [])
@@ -30,20 +27,32 @@ const ThoughtsForm = () => {
                 return (newNote.importance === Importance.Critical) ? `${styles.importanceLevel_Critical} ${styles.importanceLevel_selected}` : styles.importanceLevel_Critical
         }
     }
-    useEffect(() => {
-        console.log(newNote)
-    }, [newNote])
-
+    const saveNoteInDb = async (e: any, note: Note) => {
+        e.preventDefault()
+        try {
+            const addedNote = await fetch('/api/saveNote', {
+                method: 'POST',
+                mode: 'cors',
+                body: JSON.stringify({ ...note, createdAt: new Date().toDateString() }),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        } catch (e) {
+            console.log('ERROR: ', e)
+        }
+        setNewNote(DEFAULT_NOTE)
+    }
     return (
         <form className={styles.thoughtsForm}>
             <h5>create thought</h5>
             <div className={styles.thoughtsForm_field}>
                 <label htmlFor="title">title</label>
-                <input type="text" id="title" name="title" onChange={updateNote} maxLength={16}></input>
+                <input type="text" id="title" name="title" onChange={updateNote} maxLength={16} value={newNote.title}></input>
             </div>
             <div className={styles.thoughtsForm_field}>
                 <label htmlFor="textarea">text</label>
-                <textarea className="textarea" id="textarea" name="text" onChange={updateNote}></textarea>
+                <textarea className="textarea" id="textarea" name="text" onChange={updateNote} value={newNote.text}></textarea>
             </div>
             <div className={styles.importanceLevel}>
                 <FaOctopusDeploy className={getImportanceClass(Importance.Not)} onClick={() => updateImportance(Importance.Not)} />
@@ -52,7 +61,7 @@ const ThoughtsForm = () => {
                 <FaOctopusDeploy className={getImportanceClass(Importance.High)} onClick={() => updateImportance(Importance.High)} />
                 <FaOctopusDeploy className={getImportanceClass(Importance.Critical)} onClick={() => updateImportance(Importance.Critical)} />
             </div>
-            <button className={styles.thoughtsForm_save}>save</button>
+            <button className={styles.thoughtsForm_save} onClick={(e) => saveNoteInDb(e, newNote)}>save</button>
         </form>
     )
 }

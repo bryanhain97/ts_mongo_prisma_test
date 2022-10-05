@@ -1,12 +1,10 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { PrismaClient } from '@prisma/client'
-
+import { prisma } from './db'
 interface User {
     email: string,
     name: string
 };
 
-const prisma = new PrismaClient()
 
 export const writeToDatabase = async ({ email, name }: User) => {
     const USER = await prisma.user.create({

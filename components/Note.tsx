@@ -1,18 +1,16 @@
 import NoteProps, { Importance } from '../types/Note';
 import { ReactElement, useCallback } from 'react';
 import styles from '../styles/Note.module.sass'
-import { useFormattedDate } from '../hooks';
 import { FaOctopusDeploy } from 'react-icons/fa'
 import { motion } from 'framer-motion'
 
 const Note = ({
     title = 'No title',
     text = 'No text',
-    createdAt = new Date(),
-    importance = Importance.Not // 0,1,2,3,4
+    createdAt,
+    importance = Importance.Not
 }: NoteProps
 ): ReactElement => {
-    const [formattedDate, _] = useFormattedDate(createdAt);
     const getClassForImportance = useCallback((importance: Importance) => {
         switch (importance) {
             case 1:
@@ -40,7 +38,7 @@ const Note = ({
             </div>
             <div className={styles.note_divider}></div>
             <p className={styles.note_text}>{text}</p>
-            <span className={styles.note_date}>{formattedDate}</span>
+            <span className={styles.note_date}>{createdAt}</span>
         </motion.div>
     )
 }

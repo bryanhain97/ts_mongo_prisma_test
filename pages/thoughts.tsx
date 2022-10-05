@@ -2,43 +2,35 @@ import { NextPage } from 'next';
 import type ThoughtsPageProps from '../types/ThoughtsPage'
 import styles from '../styles/Thoughts.module.sass'
 import { Note, ThoughtsForm } from '../components';
-import { Importance } from '../types/Note';
+import { prisma } from './api/db';
+import NoteProps from '../types/Note';
 
-const ThoughtsPage: NextPage<ThoughtsPageProps> = () => {
+const ThoughtsPage: NextPage<ThoughtsPageProps> = ({ notes }) => {
     return (
         <div className={styles.thoughtsPage}>
             <ThoughtsForm />
-            <Note
-                text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque qui amet quos dolore nam eveniet temporibus?"
-                importance={Importance.Not}
-            />
-            <Note
-                text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque qui amet quos dolore nam eveniet temporibus?"
-                importance={Importance.Low}
-            />
-            <Note
-                text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque qui amet quos dolore nam eveniet temporibus?"
-                importance={Importance.Medium}
-            />
-            <Note
-                text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque qui amet quos dolore nam eveniet temporibus?"
-                importance={Importance.High}
-            />
-            <Note
-                text="Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque qui amet quos dolore nam eveniet temporibus?"
-                importance={Importance.Critical}
-            />
+            {notes.map(({ text, title, importance, createdAt }:
+                NoteProps, idx: number) => (
+                <Note
+                    key={idx}
+                    text={text}
+                    title={title}
+                    importance={importance}
+                    createdAt={createdAt}
+                />)
+            )}
         </div>
     )
 }
 export default ThoughtsPage
 
 
-// import { writeToDatabase } from "./api/writeToDatabase"
-// export async function getServerSideProps() {
-//     const user = await writeToDatabase({ email: 'bryan.test@gmail.com', name: 'brav' })
-//     // by importing the logic into getServerSideProps we dont fetch twice --- CORRECT
-//     // fetch('localhost:3000/api/route') fetches api route which then calls db => additional call => bad for performance
-//     console.log(user)
-//     return { props: { user } }
-// }
+export async function getServerSideProps() {
+    let notes = await prisma.note.findMany()
+    notes = JSON.parse(JSON.stringify(notes))
+    return {
+        props: {
+            notes
+        }
+    }
+}

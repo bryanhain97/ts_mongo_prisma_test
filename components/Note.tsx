@@ -11,7 +11,7 @@ const Note = ({
     importance = Importance.Not
 }: NoteProps
 ): ReactElement => {
-    const getClassForImportance = useCallback((importance: Importance) => {
+    const getImportanceClass = useCallback((importance: Importance) => {
         switch (importance) {
             case 1:
                 return styles.note_icon_LOW;
@@ -33,7 +33,7 @@ const Note = ({
             <div className={styles.note_header}>
                 <h2 className={styles.note_title}>{title}</h2>
                 <span className={styles.importance}>
-                    <FaOctopusDeploy className={getClassForImportance(importance)} />
+                    <FaOctopusDeploy className={getImportanceClass(importance)} />
                 </span>
             </div>
             <div className={styles.note_divider}></div>

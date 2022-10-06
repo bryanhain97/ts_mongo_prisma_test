@@ -1,6 +1,6 @@
-import { ReactElement } from 'react'
-import styles from '../styles/Navbar.module.sass'
-import NavbarElement from './NavbarElement'
+import { ReactElement } from 'react';
+import styles from '../styles/Navbar.module.sass';
+import NavbarElement from './NavbarElement';
 
 const Navbar = (): ReactElement => {
     return (
@@ -9,7 +9,7 @@ const Navbar = (): ReactElement => {
             <NavbarElement href="/thoughts" title="thoughts" />
             <NavbarElement href="/about" title="about" />
         </nav>
-    )
-}
+    );
+};
 
 export default Navbar;

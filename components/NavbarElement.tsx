@@ -1,6 +1,6 @@
-import Link, { LinkProps } from 'next/link'
-import styles from '../styles/Navbar.module.sass'
-import { ReactElement } from 'react'
+import Link, { LinkProps } from 'next/link';
+import styles from '../styles/Navbar.module.sass';
+import { ReactElement } from 'react';
 
 interface NavbarLinkProps extends LinkProps {
     title?: string;
@@ -19,7 +19,7 @@ const NavbarElement = ({
                 </a>
             </Link>
         </div>
-    )
-}
+    );
+};
 
 export default NavbarElement;

@@ -1,8 +1,9 @@
 import NoteProps, { Importance } from '../types/Note';
-import { ReactElement, useCallback } from 'react';
-import styles from '../styles/Note.module.sass'
-import { FaOctopusDeploy } from 'react-icons/fa'
-import { motion } from 'framer-motion'
+import { ReactElement, useCallback, useContext } from 'react';
+import { NotesContext } from '../pages/thoughts';
+import styles from '../styles/Note.module.sass';
+import { FaOctopusDeploy } from 'react-icons/fa';
+import { motion } from 'framer-motion';
 
 
 const Note = ({
@@ -13,6 +14,7 @@ const Note = ({
     importance = Importance.Not
 }: NoteProps
 ): ReactElement => {
+    const { setCurrentNotes } = useContext(NotesContext);
     const getImportanceClass = useCallback((importance: Importance) => {
         switch (importance) {
             case 1:
@@ -26,34 +28,38 @@ const Note = ({
             default:
                 return styles.note_icon_NOT;
         }
-    }, [])
+    }, []);
     const getTimeFromUTCTime = useCallback((createdAt: string): string => {
-        const time = new Date(createdAt).toLocaleTimeString()
-        return time
-    }, [])
+        const time = new Date(createdAt).toLocaleTimeString();
+        return time;
+    }, []);
 
     const getDateFromUTCTime = useCallback((createdAt: string): string => {
-        const date = new Date(createdAt).toUTCString().substring(0, 16)
-        return date
-    }, [])
+        const date = new Date(createdAt).toUTCString().substring(0, 16);
+        return date;
+    }, []);
     const deleteNote = async (id: NoteProps['id']) => {
-        const response = await fetch('/api/deleteNote', {
-            method: 'POST',
-            mode: 'cors',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ id })
-        })
-        const deletedID = await response.json()
-        console.log(deletedID)
-    }
+        try {
+            const response = await fetch('/api/deleteNote', {
+                method: 'POST',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ id })
+            });
+            const { id: deletedID } = await response.json();
+            setCurrentNotes((prev) => prev.filter(({ id }) => id !== deletedID));
+        } catch (e) {
+            console.log('ERROR! ', e);
+        }
+    };
 
     return (
         <motion.div
             className={styles.note}
             id={id}
-            animate={{ x: [-15, 0], opacity: [0, 1] }}
+            animate={{ x: [-5, 0], opacity: [0, 1] }}
         >
             <div className={styles.note_header}>
                 <span className={styles.note_delete} onClick={() => deleteNote(id)}></span>
@@ -69,7 +75,7 @@ const Note = ({
                 <span className={styles.note_createdAt_time}>{getTimeFromUTCTime(createdAt!)}</span>
             </div>
         </motion.div>
-    )
-}
+    );
+};
 
 export default Note;

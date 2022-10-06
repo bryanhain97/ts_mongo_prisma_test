@@ -1,6 +1,6 @@
 import Navbar from './Navbar';
 import { ReactNode } from 'react';
-import styles from '../styles/Layout.module.sass'
+import styles from '../styles/Layout.module.sass';
 
 
 const Layout = ({ children }: { children: ReactNode }) => {
@@ -11,7 +11,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
                 {children}
             </main>
         </>
-    )
-}
+    );
+};
 
 export default Layout;

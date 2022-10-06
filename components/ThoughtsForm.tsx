@@ -1,67 +1,76 @@
 import styles from '../styles/ThoughtsForm.module.sass';
 import Note, { Importance, RemainingChars } from '../types/Note';
-import { ChangeEvent, useState, useCallback, useEffect } from 'react'
-import { FaOctopusDeploy } from 'react-icons/fa'
+import { ChangeEvent, useState, useCallback, useEffect, useContext } from 'react';
+import { NotesContext } from '../pages/thoughts';
+import { FaOctopusDeploy } from 'react-icons/fa';
 
 
 
-const DEFAULT_NOTE: Note = { title: '', text: '', importance: Importance.Not }
-const TEXT_MAXLENGTH: number = 220
-const TITLE_MAXLENGTH: number = 16
+const DEFAULT_NOTE: Note = { title: '', text: '', importance: Importance.Not };
+const TEXT_MAXLENGTH: number = 220;
+const TITLE_MAXLENGTH: number = 16;
 
 
 const ThoughtsForm = () => {
-    const [newNote, setNewNote] = useState<Note>(DEFAULT_NOTE)
-    const updateNote = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-        setNewNote((prevNote) => ({ ...prevNote, [e.target.name]: e.target.value }))
-    }, [])
+    const { setCurrentNotes } = useContext(NotesContext);
+    const [newNote, setNewNote] = useState<Note>(DEFAULT_NOTE);
     const [remainingChars, setRemainingChars] = useState<RemainingChars>({
         title: TITLE_MAXLENGTH,
         text: TEXT_MAXLENGTH
-    })
-    const updateImportance = (importance: Importance) => {
-        setNewNote((prevNote) => ({ ...prevNote, importance }))
-    }
-    const getRemainingClass = (remainingChars: RemainingChars[keyof RemainingChars]) => {
-        return remainingChars === 0 ? styles.remaining_chars_zero : styles.remaining_chars
-    }
+    });
+
+    const updateNote = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+        setNewNote((prevNote) => ({ ...prevNote, [e.target.name]: e.target.value }));
+    }, []);
+    const updateImportance = useCallback((importance: Importance) => {
+        setNewNote((prevNote) => ({ ...prevNote, importance }));
+    }, []);
+    const getRemainingClass = useCallback((remainingChars: RemainingChars[keyof RemainingChars]) => {
+        return remainingChars === 0 ? styles.remaining_chars_zero : styles.remaining_chars;
+    }, []);
     const getImportanceClass = (importance: Importance) => {
         switch (importance) {
             case Importance.Not:
-                return (newNote.importance === Importance.Not) ? `${styles.importanceLevel_Not} ${styles.importanceLevel_selected}` : styles.importanceLevel_Not
+                return (newNote.importance === Importance.Not) ? `${styles.importanceLevel_Not} ${styles.importanceLevel_selected}` : styles.importanceLevel_Not;
             case Importance.Low:
-                return (newNote.importance === Importance.Low) ? `${styles.importanceLevel_Low} ${styles.importanceLevel_selected}` : styles.importanceLevel_Low
+                return (newNote.importance === Importance.Low) ? `${styles.importanceLevel_Low} ${styles.importanceLevel_selected}` : styles.importanceLevel_Low;
             case Importance.Medium:
-                return (newNote.importance === Importance.Medium) ? `${styles.importanceLevel_Medium} ${styles.importanceLevel_selected}` : styles.importanceLevel_Medium
+                return (newNote.importance === Importance.Medium) ? `${styles.importanceLevel_Medium} ${styles.importanceLevel_selected}` : styles.importanceLevel_Medium;
             case Importance.High:
-                return (newNote.importance === Importance.High) ? `${styles.importanceLevel_High} ${styles.importanceLevel_selected}` : styles.importanceLevel_High
+                return (newNote.importance === Importance.High) ? `${styles.importanceLevel_High} ${styles.importanceLevel_selected}` : styles.importanceLevel_High;
             case Importance.Critical:
-                return (newNote.importance === Importance.Critical) ? `${styles.importanceLevel_Critical} ${styles.importanceLevel_selected}` : styles.importanceLevel_Critical
+                return (newNote.importance === Importance.Critical) ? `${styles.importanceLevel_Critical} ${styles.importanceLevel_selected}` : styles.importanceLevel_Critical;
         }
-    }
+    };
     const saveNoteInDb = async (e: any, note: Note) => {
-        e.preventDefault()
+        e.preventDefault();
         try {
             const createdAt = new Date();
-            const addedNote = await fetch('/api/saveNote', {
+            const response = await fetch('/api/saveNote', {
                 method: 'POST',
                 mode: 'cors',
                 body: JSON.stringify({ ...note, createdAt }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
+                headers: { 'Content-Type': 'application/json' }
             });
-        } catch (e) {
-            console.log('ERROR: ', e)
+            const addedNote = await response.json();
+            setCurrentNotes((prev): Note[] => ([...prev, addedNote]));
         }
-        setNewNote(DEFAULT_NOTE)
-    }
+        catch (e) {
+            console.log('ERROR: ', e);
+        }
+        finally {
+            setNewNote(DEFAULT_NOTE);
+        }
+    };
+
+
     useEffect(() => {
         setRemainingChars(() => ({
             title: TITLE_MAXLENGTH - newNote.title!.length,
             text: TEXT_MAXLENGTH - newNote.text.length
-        }))
-    }, [newNote.text, newNote.title])
+        }));
+    }, [newNote.text, newNote.title]);
+
 
     return (
         <form className={styles.thoughtsForm}>
@@ -95,7 +104,7 @@ const ThoughtsForm = () => {
                 <button className={styles.thoughtsForm_save} onClick={(e) => saveNoteInDb(e, newNote)}>save</button>
             </div>
         </form>
-    )
-}
+    );
+};
 
 export default ThoughtsForm;

@@ -1,19 +1,29 @@
 import styles from '../styles/ThoughtsForm.module.sass';
-import Note, { Importance } from '../types/Note';
-import { useRouter } from 'next/router';
-import { ChangeEvent, useState, useCallback } from 'react'
+import Note, { Importance, RemainingChars } from '../types/Note';
+import { ChangeEvent, useState, useCallback, useEffect } from 'react'
 import { FaOctopusDeploy } from 'react-icons/fa'
 
+
+
 const DEFAULT_NOTE: Note = { title: '', text: '', importance: Importance.Not }
+const TEXT_MAXLENGTH: number = 220
+const TITLE_MAXLENGTH: number = 16
+
 
 const ThoughtsForm = () => {
-    const router = useRouter()
     const [newNote, setNewNote] = useState<Note>(DEFAULT_NOTE)
     const updateNote = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
         setNewNote((prevNote) => ({ ...prevNote, [e.target.name]: e.target.value }))
     }, [])
+    const [remainingChars, setRemainingChars] = useState<RemainingChars>({
+        title: TITLE_MAXLENGTH,
+        text: TEXT_MAXLENGTH
+    })
     const updateImportance = (importance: Importance) => {
-        setNewNote((prevNote) => ({ ...prevNote, importance: importance }))
+        setNewNote((prevNote) => ({ ...prevNote, importance }))
+    }
+    const getRemainingClass = (remainingChars: RemainingChars[keyof RemainingChars]) => {
+        return remainingChars === 0 ? styles.remaining_chars_zero : styles.remaining_chars
     }
     const getImportanceClass = (importance: Importance) => {
         switch (importance) {
@@ -41,27 +51,39 @@ const ThoughtsForm = () => {
                     'Content-Type': 'application/json'
                 }
             });
-            router.reload()
         } catch (e) {
             console.log('ERROR: ', e)
         }
         setNewNote(DEFAULT_NOTE)
     }
+    useEffect(() => {
+        setRemainingChars(() => ({
+            title: TITLE_MAXLENGTH - newNote.title!.length,
+            text: TEXT_MAXLENGTH - newNote.text.length
+        }))
+    }, [newNote.text, newNote.title])
+
     return (
         <form className={styles.thoughtsForm}>
             <h5>create thought</h5>
             <div className={styles.thoughtsForm_field}>
-                <label htmlFor="title">title</label>
-                <input type="text" id="title" name="title" onChange={updateNote} maxLength={16} value={newNote.title}></input>
+                <label htmlFor="title">
+                    title
+                    <span className={getRemainingClass(remainingChars.title)}>{`(${remainingChars.title})`}</span>
+                </label>
+                <input type="text" id="title" name="title" onChange={updateNote} maxLength={TITLE_MAXLENGTH} value={newNote.title}></input>
             </div>
             <div className={styles.thoughtsForm_field}>
-                <label htmlFor="textarea">text</label>
+                <label htmlFor="textarea">
+                    text
+                    <span className={getRemainingClass(remainingChars.text)}>{`(${remainingChars.text})`}</span>
+                </label>
                 <textarea
                     className="textarea" id="textarea"
                     name="text"
                     onChange={updateNote}
                     value={newNote.text}
-                    maxLength={220}>
+                    maxLength={TEXT_MAXLENGTH}>
                 </textarea>
             </div>
             <div className={styles.importanceLevel}>
@@ -70,8 +92,8 @@ const ThoughtsForm = () => {
                 <FaOctopusDeploy className={getImportanceClass(Importance.Medium)} onClick={() => updateImportance(Importance.Medium)} />
                 <FaOctopusDeploy className={getImportanceClass(Importance.High)} onClick={() => updateImportance(Importance.High)} />
                 <FaOctopusDeploy className={getImportanceClass(Importance.Critical)} onClick={() => updateImportance(Importance.Critical)} />
+                <button className={styles.thoughtsForm_save} onClick={(e) => saveNoteInDb(e, newNote)}>save</button>
             </div>
-            <button className={styles.thoughtsForm_save} onClick={(e) => saveNoteInDb(e, newNote)}>save</button>
         </form>
     )
 }

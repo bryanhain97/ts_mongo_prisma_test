@@ -5,7 +5,10 @@ enum Importance {
     High = 3,
     Critical = 4,
 }
-
+type RemainingChars = {
+    title: number,
+    text: number
+}
 export default interface NoteProps {
     id?: string,
     title?: string,
@@ -13,4 +16,7 @@ export default interface NoteProps {
     createdAt?: string,
     importance: Importance
 }
-export { Importance }
+export {
+    Importance,
+    type RemainingChars
+}

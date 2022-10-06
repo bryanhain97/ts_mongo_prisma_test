@@ -44,7 +44,7 @@ const Note = ({
         >
             <div className={styles.note_header}>
                 <h2 className={styles.note_title}>{title}</h2>
-                <span className={styles.importance}>
+                <span className={styles.note_importance}>
                     <FaOctopusDeploy className={getImportanceClass(importance)} />
                 </span>
             </div>

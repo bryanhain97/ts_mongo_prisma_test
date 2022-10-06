@@ -36,18 +36,18 @@ const Note = ({
         const date = new Date(createdAt).toUTCString().substring(0, 16)
         return date
     }, [])
-    // const deleteNote = async (id: NoteProps['id']) => {
-    //     const response = await fetch('/api/deleteNote', {
-    //         method: 'POST',
-    //         mode: 'cors',
-    //         headers: {
-    //             'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify({ id })
-    //     })
-    //     const deletedID = await response.json()
-    //     console.log(deletedID)
-    // }
+    const deleteNote = async (id: NoteProps['id']) => {
+        const response = await fetch('/api/deleteNote', {
+            method: 'POST',
+            mode: 'cors',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ id })
+        })
+        const deletedID = await response.json()
+        console.log(deletedID)
+    }
 
     return (
         <motion.div
@@ -56,7 +56,7 @@ const Note = ({
             animate={{ x: [-15, 0], opacity: [0, 1] }}
         >
             <div className={styles.note_header}>
-                <span className={styles.note_delete} onClick={() => {}}></span>
+                <span className={styles.note_delete} onClick={() => deleteNote(id)}></span>
                 <h2 className={styles.note_title}>{title}</h2>
                 <span className={styles.note_importance}>
                     <FaOctopusDeploy className={getImportanceClass(importance)} />

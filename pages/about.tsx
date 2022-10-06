@@ -6,8 +6,8 @@ const AboutPage: NextPage = () => {
         <>
             aboutpage
         </>
-    )
-}
+    );
+};
 
 
 export default AboutPage;

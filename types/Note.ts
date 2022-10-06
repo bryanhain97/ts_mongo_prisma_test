@@ -15,8 +15,10 @@ export default interface NoteProps {
     text: string,
     createdAt?: string,
     importance: Importance
-}
+// eslint-disable-next-line semi
+};
+
 export {
     Importance,
     type RemainingChars
-}
+};

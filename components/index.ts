@@ -10,4 +10,4 @@ export {
     NavbarElement,
     Note,
     ThoughtsForm
-}
+};

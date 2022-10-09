@@ -1,6 +1,6 @@
+import styles from '../styles/Layout.module.sass';
 import Navbar from './Navbar';
 import { ReactElement } from 'react';
-import styles from '../styles/Layout.module.sass';
 
 
 const Layout = ({ children }: { children: ReactElement }) => {

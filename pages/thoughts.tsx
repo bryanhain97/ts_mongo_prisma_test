@@ -1,5 +1,6 @@
 import { NextPage } from 'next';
-import { createContext, SetStateAction, useState, Dispatch } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import { createContext, SetStateAction, useState, Dispatch, useEffect } from 'react';
 import type ThoughtsPageProps from '../types/ThoughtsPage';
 import styles from '../styles/Thoughts.module.sass';
 import { Note, ThoughtsForm } from '../components';
@@ -21,17 +22,19 @@ const ThoughtsPage: NextPage<ThoughtsPageProps> = ({ notes }) => {
         <NotesContext.Provider value={{ currentNotes, setCurrentNotes }}>
             <div className={styles.thoughtsPage}>
                 <ThoughtsForm />
-                {currentNotes.map(({ id, text, title, importance, createdAt }:
-                    NoteProps, idx) => (
-                    <Note
-                        key={idx}
-                        id={id}
-                        text={text}
-                        title={title}
-                        importance={importance}
-                        createdAt={createdAt}
-                    />)
-                )}
+                <AnimatePresence>
+                    {currentNotes.map(({ id, text, title, importance, createdAt }:
+                        NoteProps, idx) => (
+                        <Note
+                            key={idx}
+                            id={id}
+                            text={text}
+                            title={title}
+                            importance={importance}
+                            createdAt={createdAt}
+                        />)
+                    )}
+                </AnimatePresence>
             </div >
         </NotesContext.Provider>
     );

@@ -60,6 +60,7 @@ const Note = ({
             className={styles.note}
             id={id}
             animate={{ x: [-5, 0], opacity: [0, 1] }}
+            exit={{ x: [0, -5], opacity: [1, 0] }}
         >
             <div className={styles.note_header}>
                 <span className={styles.note_delete} onClick={() => deleteNote(id)}></span>

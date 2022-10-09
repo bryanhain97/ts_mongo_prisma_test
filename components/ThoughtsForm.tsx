@@ -1,19 +1,19 @@
 import styles from '../styles/ThoughtsForm.module.sass';
-import Note, { Importance, RemainingChars } from '../types/Note';
+import NoteProps, { Importance, RemainingChars } from '../types/Note';
 import { ChangeEvent, useState, useCallback, useEffect, useContext } from 'react';
 import { NotesContext } from '../pages/thoughts';
 import { FaOctopusDeploy } from 'react-icons/fa';
 
 
 
-const DEFAULT_NOTE: Note = { title: '', text: '', importance: Importance.Not };
+const DEFAULT_NOTE: NoteProps = { title: '', text: '', importance: Importance.Not };
 const TEXT_MAXLENGTH: number = 220;
 const TITLE_MAXLENGTH: number = 16;
 
 
 const ThoughtsForm = () => {
     const { setCurrentNotes } = useContext(NotesContext);
-    const [newNote, setNewNote] = useState<Note>(DEFAULT_NOTE);
+    const [newNote, setNewNote] = useState<NoteProps>(DEFAULT_NOTE);
     const [remainingChars, setRemainingChars] = useState<RemainingChars>({
         title: TITLE_MAXLENGTH,
         text: TEXT_MAXLENGTH
@@ -42,7 +42,7 @@ const ThoughtsForm = () => {
                 return (newNote.importance === Importance.Critical) ? `${styles.importanceLevel_Critical} ${styles.importanceLevel_selected}` : styles.importanceLevel_Critical;
         }
     };
-    const saveNoteInDb = async (e: any, note: Note) => {
+    const saveNoteInDb = async (e: any, note: NoteProps) => {
         e.preventDefault();
         try {
             const createdAt = new Date();
@@ -53,7 +53,7 @@ const ThoughtsForm = () => {
                 headers: { 'Content-Type': 'application/json' }
             });
             const addedNote = await response.json();
-            setCurrentNotes((prev): Note[] => ([...prev, addedNote]));
+            setCurrentNotes((prev): NoteProps[] => ([...prev, addedNote]));
         }
         catch (e) {
             console.log('ERROR: ', e);

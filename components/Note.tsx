@@ -1,9 +1,12 @@
-import NoteProps, { Importance } from '../types/Note';
 import { ReactElement, useCallback, useContext } from 'react';
 import { NotesContext } from '../pages/thoughts';
 import styles from '../styles/Note.module.sass';
 import { FaOctopusDeploy } from 'react-icons/fa';
 import { motion } from 'framer-motion';
+import {
+    NoteProps,
+    Importance
+} from '../types';
 
 
 const Note = ({

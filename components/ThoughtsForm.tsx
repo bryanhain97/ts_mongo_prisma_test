@@ -1,19 +1,25 @@
 import styles from '../styles/ThoughtsForm.module.sass';
-import NoteProps, { Importance, RemainingChars } from '../types/Note';
 import { ChangeEvent, useState, useCallback, useEffect, useContext } from 'react';
 import { NotesContext } from '../pages/thoughts';
 import { FaOctopusDeploy } from 'react-icons/fa';
-
+import {
+    RequiredLength,
+    NoteProps,
+    Importance,
+    RemainingChars
+} from '../types';
 
 
 const DEFAULT_NOTE: NoteProps = { title: '', text: '', importance: Importance.Not };
 const TEXT_MAXLENGTH: number = 220;
+const TEXT_MINLENGTH: number = 8;
 const TITLE_MAXLENGTH: number = 16;
-
+const TITLE_MINLENGTH: number = 4;
 
 const ThoughtsForm = () => {
     const { setCurrentNotes } = useContext(NotesContext);
     const [newNote, setNewNote] = useState<NoteProps>(DEFAULT_NOTE);
+    const [requiredLength, setRequiredLength] = useState<RequiredLength>({ title: false, text: false });
     const [remainingChars, setRemainingChars] = useState<RemainingChars>({
         title: TITLE_MAXLENGTH,
         text: TEXT_MAXLENGTH

@@ -35,7 +35,7 @@ const ThoughtsPage: NextPage<ThoughtsPageProps> = ({ notes }) => {
                     )}
                 </AnimatePresence>
             </div >
-        </NotesContext.Provider>
+        </NotesContext.Provider >
     );
 };
 export default ThoughtsPage;

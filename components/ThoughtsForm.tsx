@@ -3,26 +3,27 @@ import { ChangeEvent, useState, useCallback, useEffect, useContext } from 'react
 import { NotesContext } from '../pages/thoughts';
 import { FaOctopusDeploy } from 'react-icons/fa';
 import {
-    RequiredLength,
     NoteProps,
     Importance,
     RemainingChars
 } from '../types';
+import { title } from 'process';
 
 
 const DEFAULT_NOTE: NoteProps = { title: '', text: '', importance: Importance.Not };
 const TEXT_MAXLENGTH: number = 220;
-const TEXT_MINLENGTH: number = 8;
+const TEXT_MINLENGTH: number = 16;
 const TITLE_MAXLENGTH: number = 16;
 const TITLE_MINLENGTH: number = 4;
 
 const ThoughtsForm = () => {
     const { setCurrentNotes } = useContext(NotesContext);
     const [newNote, setNewNote] = useState<NoteProps>(DEFAULT_NOTE);
-    const [requiredLength, setRequiredLength] = useState<RequiredLength>({ title: false, text: false });
     const [remainingChars, setRemainingChars] = useState<RemainingChars>({
         title: TITLE_MAXLENGTH,
-        text: TEXT_MAXLENGTH
+        text: TEXT_MAXLENGTH,
+        titleRequiredLength: false,
+        textRequiredLength: false
     });
 
     const updateNote = useCallback((e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -51,18 +52,23 @@ const ThoughtsForm = () => {
     const saveNoteInDb = async (e: any, note: NoteProps) => {
         e.preventDefault();
         try {
-            const createdAt = new Date();
-            const response = await fetch('/api/saveNote', {
-                method: 'POST',
-                mode: 'cors',
-                body: JSON.stringify({ ...note, createdAt }),
-                headers: { 'Content-Type': 'application/json' }
-            });
-            const addedNote = await response.json();
-            setCurrentNotes((prev): NoteProps[] => ([...prev, addedNote]));
+            if (remainingChars.titleRequiredLength && remainingChars.textRequiredLength) {
+                const createdAt = new Date();
+                const response = await fetch('/api/saveNote', {
+                    method: 'POST',
+                    mode: 'cors',
+                    body: JSON.stringify({ ...note, createdAt }),
+                    headers: { 'Content-Type': 'application/json' }
+                });
+                const addedNote = await response.json();
+                setCurrentNotes((prev): NoteProps[] => ([...prev, addedNote]));
+            }
+            else {
+                throw new Error('Either title or text not long enough.');
+            }
         }
-        catch (e) {
-            console.log('ERROR: ', e);
+        catch ({ message }) {
+            console.log('ERROR: ', message);
         }
         finally {
             setNewNote(DEFAULT_NOTE);
@@ -70,13 +76,15 @@ const ThoughtsForm = () => {
     };
 
 
+
     useEffect(() => {
         setRemainingChars(() => ({
             title: TITLE_MAXLENGTH - newNote.title!.length,
-            text: TEXT_MAXLENGTH - newNote.text.length
+            text: TEXT_MAXLENGTH - newNote.text.length,
+            titleRequiredLength: (newNote.title!.length - TITLE_MINLENGTH >= 0) ? true : false,
+            textRequiredLength: (newNote.text!.length - TEXT_MINLENGTH >= 0) ? true : false,
         }));
     }, [newNote.text, newNote.title]);
-
 
     return (
         <form className={styles.thoughtsForm}>
@@ -85,6 +93,9 @@ const ThoughtsForm = () => {
                 <label htmlFor="title">
                     title
                     <span className={getRemainingClass(remainingChars.title)}>{`(${remainingChars.title})`}</span>
+                    <span className={remainingChars.titleRequiredLength ? styles.longEnough : styles.notLongEnough}>
+                        {remainingChars.titleRequiredLength ? 'Long enough' : 'Not Long Enough'}
+                    </span>
                 </label>
                 <input type="text" id="title" name="title" onChange={updateNote} maxLength={TITLE_MAXLENGTH} value={newNote.title}></input>
             </div>
@@ -92,6 +103,9 @@ const ThoughtsForm = () => {
                 <label htmlFor="textarea">
                     text
                     <span className={getRemainingClass(remainingChars.text)}>{`(${remainingChars.text})`}</span>
+                    <span className={remainingChars.textRequiredLength ? styles.longEnough : styles.notLongEnough}>
+                        {remainingChars.textRequiredLength ? 'Long enough' : 'Not Long Enough'}
+                    </span>
                 </label>
                 <textarea
                     className="textarea" id="textarea"

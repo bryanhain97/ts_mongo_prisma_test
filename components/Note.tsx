@@ -9,6 +9,9 @@ import {
 } from '../types';
 
 
+const MAX_DELAY = 0.55;
+
+
 const Note = ({
     id,
     title = 'No title',
@@ -52,7 +55,7 @@ const Note = ({
                 body: JSON.stringify({ id })
             });
             const { id: deletedID } = await response.json();
-            setCurrentNotes((prev) => prev.filter(({ id }) => id !== deletedID));
+            setCurrentNotes((prev) => prev.filter(({ id }) => id !== deletedID)); // update state at clientside
         } catch (e) {
             console.log('ERROR! ', e);
         }
@@ -63,6 +66,7 @@ const Note = ({
             className={styles.note}
             id={id}
             animate={{ x: [-5, 0], opacity: [0, 1] }}
+            transition={{ delay: Math.random() * MAX_DELAY }}
             exit={{ x: [0, -5], opacity: [1, 0] }}
         >
             <div className={styles.note_header}>

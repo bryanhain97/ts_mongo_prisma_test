@@ -35,6 +35,8 @@ const ThoughtsForm = () => {
     const getRemainingClass = useCallback((remainingChars: RemainingChars[keyof RemainingChars]) => {
         return remainingChars === 0 ? styles.remaining_chars_zero : styles.remaining_chars;
     }, []);
+    const getSaveButtonClass = () => (remainingChars.textRequiredLength && remainingChars.titleRequiredLength) ? styles.save_enabled : styles.save_disabled;
+
     const getImportanceClass = (importance: Importance) => {
         switch (importance) {
             case Importance.Not:
@@ -121,7 +123,7 @@ const ThoughtsForm = () => {
                 <FaOctopusDeploy className={getImportanceClass(Importance.Medium)} onClick={() => updateImportance(Importance.Medium)} />
                 <FaOctopusDeploy className={getImportanceClass(Importance.High)} onClick={() => updateImportance(Importance.High)} />
                 <FaOctopusDeploy className={getImportanceClass(Importance.Critical)} onClick={() => updateImportance(Importance.Critical)} />
-                <button className={styles.thoughtsForm_save} onClick={(e) => saveNoteInDb(e, newNote)}>save</button>
+                <button className={getSaveButtonClass()} onClick={(e) => saveNoteInDb(e, newNote)}>save</button>
             </div>
         </form>
     );

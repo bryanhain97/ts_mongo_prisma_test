@@ -3,7 +3,7 @@ import Link from 'next/link';
 import { ReactElement } from 'react';
 import {
     NavbarLinkProps
-} from '../types';
+} from '@types';
 
 const NavbarElement = ({
     href = '#',

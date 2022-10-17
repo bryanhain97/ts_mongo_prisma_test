@@ -6,10 +6,13 @@ import { ReactElement } from 'react';
 const Layout = ({ children }: { children: ReactElement }) => {
     return (
         <>
-            <Navbar />
-            <main className={styles.layout}>
-                {children}
-            </main>
+        {/* next/head */}
+            <div className={styles.layout}>
+                <Navbar />
+                <main className={styles.main}>
+                    {children}
+                </main>
+            </div>
         </>
     );
 };

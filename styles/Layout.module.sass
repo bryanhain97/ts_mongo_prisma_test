@@ -1,9 +1,12 @@
 @import 'mixins'
 
 .layout
+    width: 55vw
+    margin: 0 auto
+    height: 100vh
+    @include hideScrollbar
+    overflow: hidden
+.main
     width: 100%
     height: 100%
-    padding: 1rem
-    display: flex
     overflow-y: scroll
-    @include hideScrollbar

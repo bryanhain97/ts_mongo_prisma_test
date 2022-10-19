@@ -1,5 +1,7 @@
 @import 'mixins'
 
+$navbarHeight: 75px
+
 .layout
     width: 55vw
     margin: 0 auto
@@ -8,5 +10,5 @@
     overflow: hidden
 .main
     width: 100%
-    height: 100%
+    height: calc(100% - $navbarHeight)
     overflow-y: scroll

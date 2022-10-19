@@ -17,9 +17,16 @@ model User {
 }
 
 model Note {
-  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
   title      String?
   text       String?
   createdAt  String
   importance Int
+}
+
+model Account {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  email    String
+  username String
+  password String
 }

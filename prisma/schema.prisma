@@ -10,12 +10,6 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id    String  @id @default(auto()) @map("_id") @db.ObjectId
-  email String  @unique
-  name  String?
-}
-
 model Note {
   id         String  @id @default(auto()) @map("_id") @db.ObjectId
   title      String?
@@ -25,8 +19,9 @@ model Note {
 }
 
 model Account {
-  id       String @id @default(auto()) @map("_id") @db.ObjectId
-  email    String
-  username String
-  password String
+  id        String @id @default(auto()) @map("_id") @db.ObjectId
+  email     String @unique
+  username  String @unique
+  createdAt String
+  password  String
 }

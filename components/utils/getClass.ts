@@ -1,4 +1,4 @@
-import { RemainingChars, Importance, NoteProps } from '@types';
+import { RemainingChars, Importance, NoteProps } from 'types';
 
 const getSaveButtonClass = (
     { textRequiredLength, titleRequiredLength }: RemainingChars,

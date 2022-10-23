@@ -4,6 +4,7 @@ import NavbarElement from './NavbarElement';
 import Note from './Note';
 import ThoughtsForm from './ThoughtsForm';
 import LoginForm from './LoginForm';
+import LoginContextProvider from './LoginContext';
 
 export {
     Layout,
@@ -11,5 +12,6 @@ export {
     NavbarElement,
     Note,
     ThoughtsForm,
-    LoginForm
+    LoginForm,
+    LoginContextProvider
 };

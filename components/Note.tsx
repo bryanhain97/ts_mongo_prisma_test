@@ -1,12 +1,12 @@
-import styles from '../styles/Note.module.sass';
+import styles from 'styles/Note.module.sass';
 import { ReactElement, useCallback, useContext } from 'react';
-import { NotesContext } from '../pages/thoughts';
+import { NotesContext } from 'pages/thoughts';
 import { FaOctopusDeploy } from 'react-icons/fa';
 import { motion } from 'framer-motion';
 import {
     NoteProps,
     Importance
-} from '../types';
+} from 'types';
 
 
 const MAX_DELAY = 0.55;

@@ -3,7 +3,7 @@ import { RequiredLength, RemainingChars } from './ThoughtsForm';
 import ThoughtsPageProps from './ThoughtsPage';
 import NavbarLinkProps from './NavbarLink';
 import { Account, SaveAccount } from './Account';
-
+import { LoginState } from './LoginState';
 
 export {
     type NoteProps,
@@ -13,5 +13,6 @@ export {
     type ThoughtsPageProps,
     type NavbarLinkProps,
     type Account,
+    type LoginState,
     Importance
 };

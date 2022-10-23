@@ -12,9 +12,18 @@
       "@types": [
         "types/index.ts"
       ],
-      "@components": ["/components/index.ts"],
-      "@hooks": ["/hooks/index.ts"],
-      "@utils": ["/components/utils/index.ts"],
+      "@styles": [
+        "./styles/*"
+      ],
+      "@components": [
+        "/components/index.ts"
+      ],
+      "@hooks": [
+        "/hooks/index.ts"
+      ],
+      "@utils": [
+        "/components/utils/index.ts"
+      ],
     },
     "skipLibCheck": true,
     "strict": true,

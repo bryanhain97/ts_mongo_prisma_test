@@ -1,7 +1,7 @@
-import styles from '../styles/LoginForm.module.sass';
-import { useState, useCallback, ChangeEvent, EventHandler, MouseEventHandler, FormEventHandler, useEffect } from 'react';
-import { Account, SaveAccount } from '@types';
-
+import styles from 'styles/LoginForm.module.sass';
+import { useState, useCallback, ChangeEvent } from 'react';
+import { Account, SaveAccount } from 'types';
+import { useLoginContext } from 'hooks';
 
 const DEFAULT_ACCOUNT: Account = {
     username: '',
@@ -13,6 +13,7 @@ const DEFAULT_ACCOUNT: Account = {
 const LoginForm = () => {
     const [account, setAccount] = useState<Account>(DEFAULT_ACCOUNT);
     const [error, setError] = useState<unknown | any>('');
+    const { loginState, setLoginState } = useLoginContext();
 
     const updateAccount = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setAccount((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -45,6 +46,10 @@ const LoginForm = () => {
             setError(message);
         }
     };
+    const toggleLogin = useCallback((e: Event | any) => {
+        e.preventDefault();
+        setLoginState((prev) => ({ ...prev, loggedIn: !prev.loggedIn }));
+    }, [setLoginState]);
 
     return (
         <form className={styles.login}>
@@ -72,7 +77,8 @@ const LoginForm = () => {
             <button className={styles.button} onClick={(e) => loginWithAccount(e, account)}>
                 Login
             </button>
-        </form>
+            <button onClick={toggleLogin}>TOGGLE LOGIN</button>
+        </form >
     );
 };
 

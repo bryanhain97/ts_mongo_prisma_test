@@ -1,4 +1,4 @@
-import styles from '../styles/Navbar.module.sass';
+import styles from 'styles/Navbar.module.sass';
 import { ReactElement } from 'react';
 import NavbarElement from './NavbarElement';
 

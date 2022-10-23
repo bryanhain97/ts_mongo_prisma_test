@@ -1,4 +1,4 @@
-import styles from '../styles/Home.module.sass';
+import styles from 'styles/Home.module.sass';
 import type { NextPage } from 'next';
 import { LoginForm } from 'components';
 

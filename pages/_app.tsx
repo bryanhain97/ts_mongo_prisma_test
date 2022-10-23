@@ -1,11 +1,15 @@
-import '../styles/globals.sass';
+import 'styles/globals.sass';
 import type { AppProps } from 'next/app';
-import { Layout } from '../components';
+import { Layout, LoginContextProvider } from 'components';
 
 function MyApp({ Component, pageProps }: AppProps) {
-  return <Layout>
-    <Component {...pageProps} />
-  </Layout>;
+  return (
+    <LoginContextProvider>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </LoginContextProvider>
+  );
 }
 
 export default MyApp;

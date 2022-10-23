@@ -1,18 +1,18 @@
-import styles from '../styles/ThoughtsForm.module.sass';
+import styles from 'styles/ThoughtsForm.module.sass';
 import { ChangeEvent, useState, useCallback, useEffect, useContext } from 'react';
-import { NotesContext } from '../pages/thoughts';
+import { NotesContext } from 'pages/thoughts';
 import { FaOctopusDeploy } from 'react-icons/fa';
 import {
     getSaveButtonClass,
     getImportanceClass,
     getRemainingClass,
     getRequiredLengthClass
-} from './utils/';
+} from './utils';
 import {
     NoteProps,
     Importance,
     RemainingChars
-} from '../types';
+} from 'types';
 
 
 const DEFAULT_NOTE: NoteProps = { title: '', text: '', importance: Importance.Not };

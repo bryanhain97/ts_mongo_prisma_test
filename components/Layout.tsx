@@ -1,4 +1,4 @@
-import styles from '../styles/Layout.module.sass';
+import styles from 'styles/Layout.module.sass';
 import Navbar from './Navbar';
 import { ReactElement } from 'react';
 

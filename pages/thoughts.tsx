@@ -1,10 +1,10 @@
-import styles from '../styles/Thoughts.module.sass';
+import styles from 'styles/Thoughts.module.sass';
 import { NextPage } from 'next';
 import { AnimatePresence } from 'framer-motion';
 import { createContext, SetStateAction, useState, Dispatch } from 'react';
-import { Note, ThoughtsForm } from '../components';
+import { Note, ThoughtsForm } from 'components';
 import { prisma } from './api/_db';
-import { NoteProps, ThoughtsPageProps } from '../types';
+import { NoteProps, ThoughtsPageProps } from 'types';
 
 export const NotesContext = createContext<{
     currentNotes: NoteProps[],

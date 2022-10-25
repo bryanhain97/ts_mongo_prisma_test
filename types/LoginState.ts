@@ -2,7 +2,7 @@ import { Account } from './Account';
 
 type LoginState = {
     loggedIn: boolean,
-    id: Pick<Account, 'id'> | undefined
+    id: Account['id'] | undefined
 };
 
 export {

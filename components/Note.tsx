@@ -36,6 +36,8 @@ const Note = ({
         }
     }, []);
     const getTimeFromUTCTime = useCallback((createdAt: string): string => {
+        console.log(createdAt);
+        console.log(typeof createdAt);
         const time = new Date(createdAt).toLocaleTimeString();
         return time;
     }, []);

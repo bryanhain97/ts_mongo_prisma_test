@@ -1,7 +1,7 @@
 @import 'colors'
 
 .login
-    padding: 2rem
+    padding: 1rem 2rem 1rem
     width: 300px
     margin: 1rem auto
     border: 1px solid black
@@ -11,10 +11,18 @@
         margin-top: 6px
         &:first-of-type
             margin-bottom: 3px
+        &:last-of-type
 .label
     margin-right: 20px
 .button
-    margin-top: 1rem
+    margin-top: 10px
+    padding: 4px 0px
+    font-size: 10px
+    width: 120px
+    &[id="login"],
+    &[id="register"],
+    &[id="noaccount"]
+        margin-left: auto
 .errorMessage
     color: $errorMessage
     font-size: 12px

@@ -7,7 +7,7 @@ import {
     getImportanceClass,
     getRemainingClass,
     getRequiredLengthClass
-} from './utils';
+} from 'components/utils';
 import {
     NoteProps,
     Importance,

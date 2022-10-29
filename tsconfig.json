@@ -10,19 +10,19 @@
     "baseUrl": "./",
     "paths": {
       "@types": [
-        "types/index.ts"
+        "types/*"
       ],
       "@styles": [
         "./styles/*"
       ],
       "@components": [
-        "/components/index.ts"
+        "/components/*"
       ],
       "@hooks": [
-        "/hooks/index.ts"
+        "/hooks/*"
       ],
       "@utils": [
-        "/components/utils/index.ts"
+        "/components/utils/*",
       ],
     },
     "skipLibCheck": true,

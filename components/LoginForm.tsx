@@ -1,5 +1,5 @@
 import styles from 'styles/LoginForm.module.sass';
-import { useState, useCallback, ChangeEvent, MouseEventHandler, MouseEvent } from 'react';
+import { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
 import { Account, RegisterAccount, LoginFormState } from 'types';
 // import { useLoginContext } from 'hooks';
 
@@ -47,6 +47,17 @@ const LoginForm = () => {
             setError(message);
         }
     };
+    const handleLogin = useCallback(async (e: MouseEvent<HTMLButtonElement>, account: Account): Promise<void> => {
+        e.preventDefault();
+        const response = await fetch('/api/login', {
+            method: 'POST',
+            mode: 'cors',
+            body: JSON.stringify(account),
+            headers: { 'Content-Type': 'application/json' }
+        });
+        const responseText = await response.text();
+        console.log(responseText);
+    }, []);
 
     return (
         <form className={styles.login}>
@@ -75,7 +86,7 @@ const LoginForm = () => {
             }
             <div className={styles.login_field}>
                 {loginFormState === LoginFormState.LOGIN ?
-                    <button className={styles.button} id="login" onClick={(e) => { }}>Login</button>
+                    <button className={styles.button} id="login" onClick={(e) => handleLogin(e, account)}>Login</button>
                     :
                     <button className={styles.button} id="register" onClick={(e) => registerNewAccount(e, account)}>Register</button>
                 }

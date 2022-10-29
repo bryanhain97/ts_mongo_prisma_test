@@ -1,3 +1,4 @@
+import loginFormReducer from './loginFormReducer';
 import {
     getSaveButtonClass,
     getImportanceClass,
@@ -5,9 +6,11 @@ import {
     getRequiredLengthClass
 } from './getClass';
 
+
 export {
     getSaveButtonClass,
     getImportanceClass,
     getRemainingClass,
-    getRequiredLengthClass
+    getRequiredLengthClass,
+    loginFormReducer
 };

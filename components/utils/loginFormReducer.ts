@@ -3,7 +3,7 @@ type ReducerAction = {
     payload: any
 }
 
-export const loginFormReducer = (
+const loginFormReducer = (
     state: any,
     action: ReducerAction,
     e: Event & { target: HTMLButtonElement | HTMLInputElement }
@@ -28,3 +28,6 @@ export const loginFormReducer = (
             throw new Error('ERROR IN REDUCER');
     }
 };
+export default loginFormReducer;
+
+// export { };

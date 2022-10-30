@@ -6,7 +6,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.home}>
-      <LoginForm />
+      <h1>BIGMANTING APP</h1>
     </div>
   );
 };

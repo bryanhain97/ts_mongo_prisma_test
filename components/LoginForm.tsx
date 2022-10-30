@@ -1,7 +1,7 @@
 import styles from 'styles/LoginForm.module.sass';
 import { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
 import { Account, RegisterAccount, LoginFormState } from 'types';
-// import { useLoginContext } from 'hooks';
+import { signIn } from 'next-auth/react';
 
 const DEFAULT_ACCOUNT: Account = {
     username: '',
@@ -20,9 +20,10 @@ const LoginForm = () => {
     }, []);
     const handleLoginFormState = useCallback((e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
+        setError('');
         setLoginFormState((prev) => prev === LoginFormState.LOGIN ? LoginFormState.REGISTER : LoginFormState.LOGIN);
     }, [setLoginFormState]);
-    const registerNewAccount = async (e: MouseEvent<HTMLButtonElement>, account: Account): Promise<void> => {
+    const registerNewAccount = async (e: MouseEvent<HTMLButtonElement>): Promise<void> => {
         e.preventDefault();
         const registerAccount: RegisterAccount = { ...account, createdAt: new Date() };
         try {
@@ -47,17 +48,17 @@ const LoginForm = () => {
             setError(message);
         }
     };
-    const handleLogin = useCallback(async (e: MouseEvent<HTMLButtonElement>, account: Account): Promise<void> => {
+    const handleLogin = useCallback(async (e: MouseEvent<HTMLButtonElement>): Promise<void> => {
         e.preventDefault();
-        const response = await fetch('/api/login', {
-            method: 'POST',
-            mode: 'cors',
-            body: JSON.stringify(account),
-            headers: { 'Content-Type': 'application/json' }
+        const res = await signIn('credentials', {
+            username: account.username,
+            password: account.password,
+            redirect: false
         });
-        const responseText = await response.text();
-        console.log(responseText);
-    }, []);
+        const { error } = res!;
+        if (error) { setError(error); };
+        console.log(res);
+    }, [account]);
 
     return (
         <form className={styles.login}>
@@ -73,22 +74,19 @@ const LoginForm = () => {
                 </label>
                 <input type="password" id="password" onChange={updateAccount} value={account.password} className={styles.input} />
             </div>
-            {loginFormState === LoginFormState.REGISTER &&
-                <div className={styles.login_field}>
-                    <label className={styles.label} htmlFor="email">
-                        Email:
-                    </label>
-                    <input type="text" id="email" onChange={updateAccount} value={account.email} className={styles.input} />
-                    {error &&
-                        <span className={styles.errorMessage}>{error}</span>
-                    }
-                </div>
-            }
             <div className={styles.login_field}>
                 {loginFormState === LoginFormState.LOGIN ?
-                    <button className={styles.button} id="login" onClick={(e) => handleLogin(e, account)}>Login</button>
+                    <>
+                        {error && <span className={styles.errorMessage}>{error}</span>}
+                        <button className={styles.button} id="login" onClick={(e) => handleLogin(e)}>Login</button>
+                    </>
                     :
-                    <button className={styles.button} id="register" onClick={(e) => registerNewAccount(e, account)}>Register</button>
+                    <>
+                        <label className={styles.label} htmlFor="email">Email:</label>
+                        <input type="text" id="email" onChange={updateAccount} value={account.email} className={styles.input} />
+                        {error && <span className={styles.errorMessage}>{error}</span>}
+                        <button className={styles.button} id="register" onClick={(e) => registerNewAccount(e)}>Register</button>
+                    </>
                 }
                 <button className={styles.button} id="noaccount" onClick={(e) => handleLoginFormState(e)}>
                     {loginFormState === LoginFormState.LOGIN ? 'no account yet?' : 'back to login'}

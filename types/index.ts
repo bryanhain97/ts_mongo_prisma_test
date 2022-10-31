@@ -3,18 +3,19 @@ import { RequiredLength, RemainingChars } from './ThoughtsForm';
 import ThoughtsPageProps from './ThoughtsPage';
 import NavbarLinkProps from './NavbarLink';
 import { LoginFormState } from './LoginFormState';
-import { Account, RegisterAccount } from './Account';
+import { Account, NewAccount, AccountWithoutId } from './Account';
 import { LoginState } from './LoginState';
 
 export {
     type NoteProps,
-    type RegisterAccount,
+    type NewAccount,
     type RequiredLength,
     type RemainingChars,
     type ThoughtsPageProps,
     type NavbarLinkProps,
     type Account,
     type LoginState,
+    type AccountWithoutId,
     Importance,
     LoginFormState,
 };

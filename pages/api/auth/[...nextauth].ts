@@ -30,13 +30,13 @@ const authOptions: NextAuthOptions = {
                     username,
                     email
                 }: DbAccount
-                ): User => ({ id, name: username, email }))(dbAccountFound);
+                ): User => ({ id, name: username, email, image: null }))(dbAccountFound); // image prop unhandled yet, add to db schema?
                 return user;
             }
         }),
     ],
     pages: {
-        'signIn': '/',
+        'signIn': '/auth/signin',
         'signOut': '/auth/signout',
         // 'error': '/auth/error'
     }

@@ -1,18 +1,20 @@
 import styles from 'styles/LoginForm.module.sass';
 import { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
-import { Account, RegisterAccount, LoginFormState } from 'types';
+import { AccountWithoutId, NewAccount, LoginFormState } from 'types';
 import { signIn } from 'next-auth/react';
+import Router, { useRouter } from 'next/router';
 
-const DEFAULT_ACCOUNT: Account = {
+const DEFAULT_ACCOUNT: AccountWithoutId = {
     username: '',
     password: '',
     email: '',
 };
 
 const LoginForm = () => {
-    const [account, setAccount] = useState<Account>(DEFAULT_ACCOUNT);
+    const [account, setAccount] = useState<AccountWithoutId>(DEFAULT_ACCOUNT);
     const [error, setError] = useState<unknown | any>('');
     const [loginFormState, setLoginFormState] = useState<LoginFormState>(LoginFormState.LOGIN);
+    const router = useRouter();
 
     const updateAccount = useCallback((e: ChangeEvent<HTMLInputElement>) => {
         setAccount((prev) => ({ ...prev, [e.target.id]: e.target.value }));
@@ -26,11 +28,11 @@ const LoginForm = () => {
     }, [setLoginFormState]);
     const registerNewAccount = async (e: MouseEvent<HTMLButtonElement>): Promise<void> => {
         e.preventDefault();
-        const registerAccount: RegisterAccount = { ...account, createdAt: new Date() };
+        const newAccount: NewAccount = { ...account, createdAt: new Date() };
         try {
             const response = await fetch('/api/registerAccount', {
                 method: 'POST',
-                body: JSON.stringify(registerAccount),
+                body: JSON.stringify(newAccount),
                 mode: 'cors',
                 headers: { 'Content-Type': 'application/json' }
             });
@@ -56,10 +58,14 @@ const LoginForm = () => {
             password: account.password,
             redirect: false
         });
-        console.log(res);
         const { error } = res!;
-        if (error) { setError(error); };
-    }, [account]);
+        if (error) {
+            setError(error);
+        }
+        else {
+            router.push('/');
+        };
+    }, [account, router]);
 
     return (
         <form className={styles.login}>

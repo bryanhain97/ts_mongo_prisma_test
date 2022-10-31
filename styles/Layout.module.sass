@@ -5,9 +5,30 @@ $navbarHeight: 75px
 .layout
     width: 55vw
     margin: 0 auto
+    position: relative
     height: 100vh
     @include hideScrollbar
     overflow: hidden
+    .session
+        position: absolute
+        background-color: #333333
+        bottom: 1rem
+        right: 50%
+        transform: translateX(50%)
+        display: flex
+        padding: 1rem
+        flex-direction: column
+        color: white
+        .field
+            width: 380px
+            height: 35px
+            display: flex
+            align-items: center
+            span
+                &:not(&:first-of-type)
+                    min-width: 200px
+                    margin-left: auto
+                    color: coral
 .main
     width: 100%
     height: calc(100% - $navbarHeight)

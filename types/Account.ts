@@ -5,11 +5,15 @@ interface Account {
     email: string,
 };
 
-interface RegisterAccount extends Account {
+interface NewAccount extends Omit<Account, 'id'> {
     createdAt?: Date | undefined
 }
 
+type AccountWithoutId = Omit<Account, 'id'>
+
+
 export {
-    type RegisterAccount,
+    type AccountWithoutId,
+    type NewAccount,
     type Account
 };

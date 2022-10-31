@@ -21,6 +21,7 @@ const LoginForm = () => {
     const handleLoginFormState = useCallback((e: MouseEvent<HTMLButtonElement>) => {
         e.preventDefault();
         setError('');
+        setAccount(DEFAULT_ACCOUNT);
         setLoginFormState((prev) => prev === LoginFormState.LOGIN ? LoginFormState.REGISTER : LoginFormState.LOGIN);
     }, [setLoginFormState]);
     const registerNewAccount = async (e: MouseEvent<HTMLButtonElement>): Promise<void> => {
@@ -55,9 +56,9 @@ const LoginForm = () => {
             password: account.password,
             redirect: false
         });
+        console.log(res);
         const { error } = res!;
         if (error) { setError(error); };
-        console.log(res);
     }, [account]);
 
     return (

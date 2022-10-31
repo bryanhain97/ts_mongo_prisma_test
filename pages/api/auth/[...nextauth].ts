@@ -2,12 +2,9 @@ import NextAuth, { NextAuthOptions } from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { compare } from 'bcrypt';
 import { prisma } from '../_db';
-import { Account as DbAccount} from '@types';
-import { DefaultUser } from 'next-auth/core/types';
+import { Account as DbAccount } from 'types';
+import { User } from 'next-auth/core/types';
 
-interface ReturnUser extends DefaultUser {
-    username: string
-}
 
 const authOptions: NextAuthOptions = {
     session: {
@@ -28,12 +25,13 @@ const authOptions: NextAuthOptions = {
                 const { password: hashedPassword } = dbAccountFound;
                 const matchPassword = await compare(reqPassword, hashedPassword);
                 if (!matchPassword) { throw new Error('Password incorrect!'); }
-                const returnUser: ReturnUser = (({
-                    password,
-                    createdAt,
-                    ...rest
-                }) => ({ ...rest }))(dbAccountFound); // delete password and createdAt prop;
-                return returnUser;
+                const user = (({
+                    id,
+                    username,
+                    email
+                }: DbAccount
+                ): User => ({ id, name: username, email }))(dbAccountFound);
+                return user;
             }
         }),
     ],

@@ -4,14 +4,16 @@ import { useSession } from 'next-auth/react';
 
 const AboutPage: NextPage = () => {
     const { data: session, status } = useSession();
+    console.log(session);
+    console.log(status);
     return (
         <>
             aboutpage
             <p>
-                {status ?
+                {status === 'authenticated' ?
                     JSON.stringify(session)
                     :
-                    <span>loading...</span>
+                    <span>unauthenticated</span>
                 }
             </p>
         </>

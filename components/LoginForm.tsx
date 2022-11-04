@@ -2,7 +2,7 @@ import styles from 'styles/LoginForm.module.sass';
 import { useState, useCallback, ChangeEvent, MouseEvent } from 'react';
 import { AccountWithoutId, NewAccount, LoginFormState } from 'types';
 import { signIn } from 'next-auth/react';
-import Router, { useRouter } from 'next/router';
+import { useRouter } from 'next/router';
 
 const DEFAULT_ACCOUNT: AccountWithoutId = {
     username: '',

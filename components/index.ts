@@ -1,4 +1,5 @@
 import Layout from './Layout';
+import UserCredentials from './UserCredentials';
 import Navbar from './Navbar';
 import NavbarElement from './NavbarElement';
 import Note from './Note';

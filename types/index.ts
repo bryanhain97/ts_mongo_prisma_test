@@ -2,6 +2,7 @@ import NoteProps, { Importance } from './Note';
 import { RequiredLength, RemainingChars } from './ThoughtsForm';
 import ThoughtsPageProps from './ThoughtsPage';
 import NavbarLinkProps from './NavbarLink';
+import { Credentials } from './Credentials';
 import { LoginFormState } from './LoginFormState';
 import { Account, NewAccount, AccountWithoutId } from './Account';
 import { LoginState } from './LoginState';
@@ -16,6 +17,7 @@ export {
     type Account,
     type LoginState,
     type AccountWithoutId,
+    type Credentials,
     Importance,
     LoginFormState,
 };

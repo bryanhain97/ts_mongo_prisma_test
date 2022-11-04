@@ -6,7 +6,7 @@ const Home: NextPage = () => {
 
   return (
     <div className={styles.home}>
-      <h1>BIGMANTING APP</h1>
+      <h1>Test App</h1>
     </div>
   );
 };

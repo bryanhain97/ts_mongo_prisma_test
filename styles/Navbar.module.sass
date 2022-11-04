@@ -1,18 +1,21 @@
 @import 'colors'
-    
+
 .navbar
     display: flex
-    justify-content: space-between
     height: 75px
     width: 100%
     background-color: $navbarBgColor
     &_element
         text-align: center
-        width: 150px
+        // width: 150px
         margin: auto 0
+        &:not(&:last-of-type)
+            padding-right: 50px
+        &:nth-of-type(3)
+            margin-right: auto
+        &:last-of-type
+            padding-left: 50px
     &_link
         &_title
             color: $navbarLinkColor
             text-decoration: none
-
-

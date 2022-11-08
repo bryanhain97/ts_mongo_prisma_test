@@ -3,26 +3,35 @@
 .login
     padding: 1rem 2rem 1rem
     width: 300px
-    margin: 1rem auto
-    border: 1px solid black
+    margin: 0 auto
+    border: 1px solid #000
+    border-radius: 5px
+    background-color: $loginFormBackgroundColor
+    h2.loginFormState
+        color: $loginFormStateColor
+        text-transform: uppercase
+        margin-bottom: 1rem
     &_field
         display: flex
         flex-direction: column
-        margin-top: 6px
-        &:first-of-type
-            margin-bottom: 3px
-        &:last-of-type
+        input:focus
+            outline: none
 .label
     margin-right: 20px
+    margin-bottom: 3px
+    color: $loginFormColor
 .button
     margin-top: 10px
     padding: 4px 0px
     font-size: 10px
     width: 120px
+    &:first-of-type
+        margin-top: 1.5rem
     &[id="login"],
     &[id="register"],
     &[id="noaccount"]
         margin-left: auto
 .errorMessage
+    margin-top: 3px
     color: $errorMessage
     font-size: 12px

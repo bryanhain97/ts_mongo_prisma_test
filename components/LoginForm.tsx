@@ -69,6 +69,7 @@ const LoginForm = () => {
 
     return (
         <form className={styles.login}>
+            <h2 className={styles.loginFormState}>{loginFormState === LoginFormState.LOGIN ? 'Login' : 'Register'}</h2>
             <div className={styles.login_field}>
                 <label className={styles.label} htmlFor="username">
                     Username:
@@ -96,7 +97,7 @@ const LoginForm = () => {
                     </>
                 }
                 <button className={styles.button} id="noaccount" onClick={(e) => handleLoginFormState(e)}>
-                    {loginFormState === LoginFormState.LOGIN ? 'no account yet?' : 'back to login'}
+                    {loginFormState === LoginFormState.LOGIN ? 'no account yet?' : 'Back to login'}
                 </button>
             </div>
         </form >

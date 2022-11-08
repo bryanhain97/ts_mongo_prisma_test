@@ -3,11 +3,14 @@
 $navbarHeight: 75px
 
 .layout
-    width: 100vw
+    width: 100%
+    display: flex
+    flex-direction: column
     margin: 0 auto
     position: relative
-    height: 100vh
-    padding: 0rem 1rem
+    height: 100%
+    max-height: 100vh
+    padding: 0rem 1rem 1rem
     @include hideScrollbar
     overflow: hidden
     .session
@@ -29,8 +32,6 @@ $navbarHeight: 75px
                 &:not(&:first-of-type)
                     min-width: 200px
                     margin-left: auto
-                    color: coral
 .main
     width: 100%
-    height: calc(100% - $navbarHeight)
-    overflow-y: scroll
+    height: 100%
